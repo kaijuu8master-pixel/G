@@ -3,108 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق دمج الأسماء</title>
+    <title>مترجم الأسماء</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f9;
-            text-align: right;
+            color: #333;
+            text-align: center;
             padding: 20px;
         }
         .container {
-            max-width: 400px;
-            margin: 50px auto;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
             padding: 30px;
-            background-color: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #333;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
+            color: #4CAF50;
+            margin-bottom: 25px;
         }
         input[type="text"] {
-            width: 95%;
-            padding: 10px;
+            width: 70%;
+            padding: 12px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 2px solid #ddd;
             border-radius: 5px;
-            box-sizing: border-box;
-            text-align: right;
+            font-size: 16px;
+            text-align: center;
         }
         button {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: white;
-            padding: 12px 20px;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
-            width: 100%;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
-        #result-box {
+        #result {
             margin-top: 30px;
             padding: 15px;
-            background-color: #e9f7ff;
-            border: 1px dashed #007bff;
-            border-radius: 5px;
-            min-height: 20px;
-            font-size: 1.2em;
-            color: #333;
-            text-align: center;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            text-align: right;
+            font-size: 18px;
+        }
+        .name-highlight {
             font-weight: bold;
+            color: #00796b;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>دمج الأسماء</h1>
-        
-        <label for="firstName">الاسم الأول:</label>
-        <input type="text" id="firstName" placeholder="أدخل الاسم الأول">
+        <h1>✨ مترجم الأسماء: اكتشف المعنى</h1>
+        <p>أدخل الاسم باللغة العربية واضغط على زر البحث:</p>
 
-        <label for="lastName">الاسم الأخير/العائلة:</label>
-        <input type="text" id="lastName" placeholder="أدخل اسم العائلة">
+        <input type="text" id="nameInput" placeholder="أدخل الاسم هنا..." value="">
+        <button onclick="translateName()">بحث عن المعنى 🔍</button>
 
-        <button onclick="mergeNames()">دمج الأسماء</button>
-
-        <h2>النتيجة:</h2>
-        <div id="result-box">
-            سيظهر الاسم المدمج هنا...
+        <div id="result">
+            النتائج ستظهر في هذا المكان...
         </div>
     </div>
 
     <script>
-        function mergeNames() {
-            // 1. الحصول على القيم من حقول الإدخال
-            const first = document.getElementById('firstName').value.trim();
-            const last = document.getElementById('lastName').value.trim();
-            
-            // 2. التحقق من أن كلا الحقلين ليسا فارغين
-            if (first === "" && last === "") {
-                document.getElementById('result-box').textContent = "الرجاء إدخال اسم واحد على الأقل.";
+        // 1. قاعدة البيانات (القاموس) باستخدام JavaScript Object
+        const dictionaryOfNames = {
+            "محمد": "المحمود والمشكور، كثير الخصال الحميدة.",
+            "سارة": "الأميرة، السيدة، المفرحة.",
+            "خالد": "الدائم والباقي، الذي طال عمره.",
+            "نور": "الضوء والإشراق، البصيرة والهداية.",
+            "علي": "الشريف، الرفيع، العالي المكانة.",
+            "مريم": "العابدة، خادمة الرب.",
+            "يوسف": "الزيادة والعطاء، الذي يمنحه الله."
+        };
+
+        function translateName() {
+            // 2. استقبال المدخلات وتنظيفها
+            const nameInput = document.getElementById('nameInput').value.trim();
+            const resultDiv = document.getElementById('result');
+
+            if (nameInput === "") {
+                resultDiv.innerHTML = '⚠️ **الرجاء إدخال اسم للبحث.**';
                 return;
             }
 
-            // 3. دمج الأسماء باستخدام المسافة بينهما (String Concatenation)
-            // إذا كان أحد الحقلين فارغاً، سيتم دمج الحقل غير الفارغ فقط.
-            const fullName = first + " " + last;
+            // 3. البحث في القاموس
+            // يتم البحث بدون الحساسية لحالة الأحرف باستخدام nameInput (هنا باللغة العربية، لا نحتاج لتحويل كبير/صغير)
+            const meaning = dictionaryOfNames[nameInput];
 
-            // 4. عرض النتيجة
-            document.getElementById('result-box').textContent = fullName;
+            // 4. إخراج النتيجة في عنصر HTML
+            if (meaning) {
+                resultDiv.innerHTML = `
+                    <p>
+                        <span class="name-highlight">الاسم: ${nameInput}</span>
+                    </p>
+                    <p>
+                        <span class="name-highlight">المعنى:</span> ${meaning}
+                    </p>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <p style="color: red;">
+                        ❌ عفواً، لا يوجد معنى للاسم <span class="name-highlight">'${nameInput}'</span> في قاعدة البيانات الحالية.
+                    </p>
+                `;
+            }
         }
     </script>
 
