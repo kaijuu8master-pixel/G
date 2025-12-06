@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق دمج الأسماء</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            text-align: right;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: right;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result-box {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e9f7ff;
+            border: 1px dashed #007bff;
+            border-radius: 5px;
+            min-height: 20px;
+            font-size: 1.2em;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>دمج الأسماء</h1>
+        
+        <label for="firstName">الاسم الأول:</label>
+        <input type="text" id="firstName" placeholder="أدخل الاسم الأول">
+
+        <label for="lastName">الاسم الأخير/العائلة:</label>
+        <input type="text" id="lastName" placeholder="أدخل اسم العائلة">
+
+        <button onclick="mergeNames()">دمج الأسماء</button>
+
+        <h2>النتيجة:</h2>
+        <div id="result-box">
+            سيظهر الاسم المدمج هنا...
+        </div>
+    </div>
+
+    <script>
+        function mergeNames() {
+            // 1. الحصول على القيم من حقول الإدخال
+            const first = document.getElementById('firstName').value.trim();
+            const last = document.getElementById('lastName').value.trim();
+            
+            // 2. التحقق من أن كلا الحقلين ليسا فارغين
+            if (first === "" && last === "") {
+                document.getElementById('result-box').textContent = "الرجاء إدخال اسم واحد على الأقل.";
+                return;
+            }
+
+            // 3. دمج الأسماء باستخدام المسافة بينهما (String Concatenation)
+            // إذا كان أحد الحقلين فارغاً، سيتم دمج الحقل غير الفارغ فقط.
+            const fullName = first + " " + last;
+
+            // 4. عرض النتيجة
+            document.getElementById('result-box').textContent = fullName;
+        }
+    </script>
+
+</body>
+</html>
